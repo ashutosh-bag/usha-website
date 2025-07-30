@@ -1,14 +1,14 @@
 "use client"
-
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
-import { ChevronDown, Phone } from "lucide-react" // Changed FaPhoneAlt to Phone from lucide-react
+import { ChevronDown, Phone } from "lucide-react"
 
 const navItems = [
   { title: "HOME", link: "/" },
   {
     title: "ABOUT US",
+    link: "#", // Added a placeholder link for parent with dropdown
     dropdown: [
       { title: "ABOUT USHA", link: "/aboutusha" },
       { title: "MISSION & VISION", link: "/visionmission" },
@@ -23,6 +23,7 @@ const navItems = [
   },
   {
     title: "SERVICES",
+    link: "#",
     dropdown: [
       { title: "USHA SERVICES", link: "/services/ushaservices" },
       { title: "CORE SERVICES", link: "/services/coreservices" },
@@ -38,6 +39,7 @@ const navItems = [
   },
   {
     title: "WE EXECUTE",
+    link: "#",
     dropdown: [
       { title: "ENGINEERING", link: "/weexecute/engineering" },
       { title: "CONSTRUCTION", link: "/weexecute/construction" },
@@ -47,6 +49,7 @@ const navItems = [
   },
   {
     title: "PROJECTS",
+    link: "#",
     dropdown: [
       { title: "PROJECTS IN PROGRESS", link: "/projects/projectinprogress" },
       { title: "PROJECT COMPLETED", link: "/projects/projectcompleted" },
@@ -55,6 +58,7 @@ const navItems = [
   },
   {
     title: "CLIENTS",
+    link: "#",
     dropdown: [
       { title: "OUR CLIENTS", link: "/clients/ourclients" },
       { title: "CLIENT TESTIMONIALS", link: "/clients/clienttestimonial" },
@@ -62,6 +66,7 @@ const navItems = [
   },
   {
     title: "CAREER",
+    link: "#",
     dropdown: [
       { title: "REQUIREMENT POLICY", link: "/career/recriutmentpolicy" },
       { title: "REQUIREMENT PROCEDURE", link: "/career/recruitmentprocedure" },
@@ -90,7 +95,7 @@ export default function NavBar() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`hidden lg:flex justify-between items-center sticky top-0 z-50 px-8 py-4 transition-all duration-500 font-lora ${
+      className={`hidden lg:flex justify-between items-center font-mono sticky top-0 z-50 px-8 py-4 transition-all duration-500 ${
         isScrolled
           ? "h-16 bg-gradient-to-r from-blue-200 via-blue-700 to-green-600 shadow-2xl border-b border-blue-300/30"
           : "h-20 bg-gradient-to-r from-blue-200 via-blue-600 to-green-500 shadow-lg"
@@ -98,14 +103,15 @@ export default function NavBar() {
     >
       {/* Logo Section */}
       <motion.div whileHover={{ scale: 1.05 }} className="flex items-center space-x-3 min-w-fit">
-        <div className="relative">
+        <Link href="/" className="relative">
           <img
             src="/assets/logo-light.png" // Using placeholder for logo
-            alt="Logo"
+            alt="Company Logo"
             className={`transition-all duration-500 ${isScrolled ? "h-12" : "h-16"} w-auto`}
           />
+          <span className="sr-only">Home</span>
           <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-green-600/20 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        </div>
+        </Link>
       </motion.div>
       {/* Navigation Links */}
       <div className="flex-1 flex justify-center">
@@ -120,8 +126,8 @@ export default function NavBar() {
               transition={{ duration: 0.2 }}
             >
               <Link
-                href={item.link || "#"}
-                className="relative flex items-center px-4 py-3 text-sm xl:text-base font-semibold font-lora text-white hover:text-yellow-300 transition-all duration-300 rounded-lg group-hover:bg-white/10"
+                href={item.link} // Use item.link directly now that it's always defined
+                className="relative flex items-center px-4 py-3 text-sm xl:text-base font-semibold text-white hover:text-yellow-300 transition-all duration-300 rounded-lg group-hover:bg-white/10"
               >
                 <span className="relative z-10 whitespace-nowrap">{item.title}</span>
                 {item.dropdown && (
@@ -179,13 +185,13 @@ export default function NavBar() {
       >
         <div className="relative">
           <div className="bg-gradient-to-r from-blue-500 to-green-500 p-2.5 rounded-full">
-            <Phone className="text-white w-4 h-4" /> {/* Changed to Lucide Phone icon */}
+            <Phone className="text-white w-4 h-4" />
           </div>
           <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-green-500 rounded-full blur-lg opacity-30 animate-pulse"></div>
         </div>
         <div className="flex flex-col">
-          <span className="text-xs text-white/80 font-medium font-lora">Call Us</span>
-          <span className="text-sm font-bold text-white font-lora">+91-674-27241555</span>
+          <span className="text-xs text-white/80 font-medium">Call Us</span>
+          <span className="text-sm font-bold text-white">+91-674-27241555</span>
         </div>
       </motion.div>
     </motion.nav>

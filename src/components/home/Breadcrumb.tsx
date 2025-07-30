@@ -6,7 +6,7 @@ import Image from "next/image"
 
 const slides = [
   {
-    image: "/placeholder.svg?height=800&width=1200",
+    image: "/assets/home/slide.jpg",
     quote: "Innovation in every project we deliver!",
     animation: {
       initial: { opacity: 0, x: 100 },
@@ -15,7 +15,7 @@ const slides = [
     },
   },
   {
-    image: "/placeholder.svg?height=800&width=1200",
+    image: "/assets/home/slide2.jpg",
     quote: "Building the future with passion and precision!",
     animation: {
       initial: { opacity: 0, x: 100 },
@@ -24,7 +24,7 @@ const slides = [
     },
   },
   {
-    image: "/placeholder.svg?height=800&width=1200",
+    image: "/assets/home/slide3.jpg",
     quote: "Where excellence meets engineering!",
     animation: {
       initial: { opacity: 0, x: 100 },
@@ -33,7 +33,7 @@ const slides = [
     },
   },
   {
-    image: "/placeholder.svg?height=800&width=1200",
+    image: "/assets/home/slide4.jpg",
     quote: "Turning visions into reality, one project at a time!",
     animation: {
       initial: { opacity: 0, x: 100 },
@@ -42,7 +42,7 @@ const slides = [
     },
   },
   {
-    image: "/placeholder.svg?height=800&width=1200",
+    image: "/assets/home/slide5.jpg",
     quote: "Crafting excellence with every step!",
     animation: {
       initial: { opacity: 0, x: 100 },
@@ -51,7 +51,7 @@ const slides = [
     },
   },
   {
-    image: "/placeholder.svg?height=800&width=1200",
+    image: "/assets/home/slide6.jpg",
     quote: "We Are Changing The World With Time & Technology",
     animation: {
       initial: { opacity: 0, x: 100 },
