@@ -23,9 +23,12 @@ export const metadata: Metadata = {
     "Learn about our mission to maintain tradition and provide quality services, and our vision to become India's leader in EPC projects.",
   keywords: ["mission", "vision", "EPC projects", "India", "quality services"],
   icons: {
-    icon: "/logoo.png", 
+    icon: "/logoo.png",
+    shortcut: "/logoo.png",
+    apple: "/logoo.png",
   },
-}
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{

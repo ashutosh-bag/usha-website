@@ -35,6 +35,7 @@ const navItems = [
       { title: "INDUSTRIAL", link: "/services/industrial" },
       { title: "OIL & GAS SERVICES", link: "/services/oilandgas" },
       { title: "CHP & AHP SERVICES", link: "/services/chsahp" },
+      { title: "O & M SERVICES", link: "/services/o&m" },
     ],
   },
   {
