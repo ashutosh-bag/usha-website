@@ -13,7 +13,7 @@ export default function OandM() {
               Usha Projects India is renowned for turnkey EPC and O&M services across coal & ash systems in thermal
               power and industrial installations. Their capabilities include planning, engineering, execution, testing,
               commissioning, and ongoing maintenance of coal handling and ash systems in major projects like NTPC
-              Talcher, NALCO Angul, Municipal fertilizer plants, and more [^vercel_knowledge_base].
+              Talcher, NALCO Angul, Municipal fertilizer plants, and more 
             </p>
           </div>
         </div>
@@ -56,7 +56,7 @@ export default function OandM() {
                   <li>In-house EPC team handles concept, design, 3D modeling, structural and process engineering.</li>
                   <li>
                     Tools include CFD, FEM, parametric modeling and interactive design reviews for operability and
-                    maintainability [^vercel_knowledge_base].
+                    maintainability 
                   </li>
                 </ul>
               </div>
@@ -70,7 +70,7 @@ export default function OandM() {
                   <li>Mill feed&mdash;coal is sent to pulverizers and prepared for boiler burners.</li>
                   <li>
                     All equipment&mdash;conveyor belts, feeders, crushers&mdash;are calibrated for optimum throughput
-                    and dust control [^vercel_knowledge_base].
+                    and dust control 
                   </li>
                 </ul>
               </div>
@@ -117,7 +117,7 @@ export default function OandM() {
                   </li>
                   <li>
                     Projects include 195 km ash slurry pipelines (e.g., NALCO Angul), dense-phase fly ash conveyors,
-                    silos, and bagging systems [^vercel_knowledge_base].
+                    silos, and bagging systems 
                   </li>
                 </ul>
               </div>
@@ -164,11 +164,11 @@ export default function OandM() {
             <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl">Maintenance Management Framework</h2>
             <p className="text-muted-foreground md:text-lg">
               Usha employs CMMS/EAM tools, quality inspection teams with NDT, rotating machinery, and welding
-              specialists to plan, log, and track scheduled and predictive maintenance [^vercel_knowledge_base].
+              specialists to plan, log, and track scheduled and predictive maintenance 
             </p>
             <p className="text-muted-foreground md:text-lg">
               Reliability-centered design reviews are built into the EPC process to ensure operability, maintainability,
-              and safety during the plant lifecycle [^vercel_knowledge_base].
+              and safety during the plant lifecycle [
             </p>
           </div>
 
@@ -181,7 +181,7 @@ export default function OandM() {
               </li>
               <li>
                 HSE protocols include regular safety audits, equipment guarding, emergency response drills
-                [^vercel_knowledge_base].
+               
               </li>
             </ul>
           </div>
@@ -195,7 +195,7 @@ export default function OandM() {
               </li>
               <li>
                 **NALCO Angul** &ndash; 195 km ash slurry pipeline under EPC contract, complete ash handling systems
-                [^vercel_knowledge_base].
+                
               </li>
             </ul>
           </div>
