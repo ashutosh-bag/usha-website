@@ -319,7 +319,11 @@ export default function PhotoGallery() {
   const [direction, setDirection] = useState<"next" | "prev">("next")
 
   const openFolder = (folder: string) => setSelectedFolder(folder)
-  const goBack = () => setSelectedFolder(null)
+  const goBack = () => {
+    setSelectedFolder(null)
+    setSelectedImage(null) // Close image modal if open when going back to folders
+  }
+
   const openImage = (image: string, index: number) => {
     setSelectedImage(image)
     setImageIndex(index)
@@ -344,36 +348,23 @@ export default function PhotoGallery() {
     setImageIndex(prevIndex)
   }
 
-  const flipVariants = {
-    initial: (direction: "next" | "prev") => ({
-      rotateY: direction === "next" ? -90 : 90,
-      opacity: 0,
-    }),
-    animate: {
-      rotateY: 0,
-      opacity: 1,
-      transition: { duration: 0.6, ease: "easeInOut" },
-    },
-    exit: (direction: "next" | "prev") => ({
-      rotateY: direction === "next" ? 90 : -90,
-      opacity: 0,
-      transition: { duration: 0.6, ease: "easeInOut" },
-    }),
+  const fadeScaleVariants = {
+    initial: { opacity: 0, scale: 0.95 },
+    animate: { opacity: 1, scale: 1, transition: { duration: 0.3, ease: "easeOut" } },
+    exit: { opacity: 0, scale: 0.95, transition: { duration: 0.3, ease: "easeIn" } },
   }
 
   return (
-    <div className="min-h-screen font-lora bg-gradient-to-r  from-green-500 to to-sky-400 p-6">
+    <div className="min-h-screen bg-gray-50 p-6 font-sans text-gray-800">
       {/* Header */}
-      <div className="flex  justify-between items-center mb-6">
-        <h1 className="text-6xl font-extrabold text-gray-400 bg-gradient-to-r  from-red-700 via-blue-700 to-green-700 bg-clip-text text-transparent animate-gradient">
-          Our Gallery
-        </h1>
-
+      <div className="mb-8 flex items-center justify-between">
+        <h1 className="text-4xl font-bold text-gray-900 md:text-5xl">Our Gallery</h1>
         {selectedFolder && (
           <button
             onClick={goBack}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition"
+            className="group rounded-lg border border-gray-300 bg-white px-4 py-2 text-gray-700 shadow-sm transition-all hover:border-gray-400 hover:bg-gray-50 hover:text-gray-900"
           >
+            <span className="mr-2 inline-block transition-transform group-hover:-translate-x-1">◀</span>
             Go Back
           </button>
         )}
@@ -382,26 +373,29 @@ export default function PhotoGallery() {
       {/* Folder View */}
       {!selectedFolder && (
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6"
+          className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          {galleryData.map(({ folder, bgImage }) => (
+          {galleryData.map(({ folder, images }) => (
             <motion.div
               key={folder}
-              className="p-6 w-full h-40 md:h-56 lg:h-64 shadow-xl rounded-2xl cursor-pointer hover:shadow-2xl transition flex flex-col items-center justify-center border-2 border-transparent hover:border-blue-500 relative overflow-hidden"
-              style={{
-                backgroundImage: `url(${bgImage})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-              }}
+              className="relative h-48 cursor-pointer overflow-hidden rounded-xl bg-white shadow-lg transition-all hover:scale-[1.02] hover:shadow-xl md:h-56 lg:h-64"
               onClick={() => openFolder(folder)}
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.02 }}
             >
-              <div className="absolute inset-0 bg-black/40 rounded-2xl"></div>
-              <h2 className="relative text-2xl font-bold text-white z-10">{folder}</h2>
+              <Image
+                src={images[0] || "/placeholder.svg"} // Use the first image in the folder as cover
+                alt={`Cover for ${folder} folder`}
+                fill
+                className="object-cover transition-transform duration-300 group-hover:scale-105"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                priority={false} // Only load when visible
+              />
+              <div className="absolute inset-0 flex items-end rounded-xl bg-gradient-to-t from-black/70 to-transparent p-4">
+                <h2 className="text-xl font-semibold text-white md:text-2xl">{folder}</h2>
+              </div>
             </motion.div>
           ))}
         </motion.div>
@@ -409,57 +403,82 @@ export default function PhotoGallery() {
 
       {/* Image Grid View */}
       {selectedFolder && !selectedImage && (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        <motion.div
+          className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           {galleryData
             .find((folder) => folder.folder === selectedFolder)
             ?.images.map((image, index) => (
-              <Image
-                width={800}
-                height={800}
+              <motion.div
                 key={image}
-                src={image || "/placeholder.svg"}
-                alt=""
-                className="w-full h-full object-cover rounded-lg cursor-pointer hover:opacity-80 transition"
+                className="relative aspect-square cursor-pointer overflow-hidden rounded-lg bg-white shadow-md transition-all hover:scale-[1.02] hover:shadow-lg"
+                whileHover={{ scale: 1.02 }}
                 onClick={() => openImage(image, index)}
-              />
+              >
+                <Image
+                  src={image || "/placeholder.svg?height=800&width=800&query=gallery image"}
+                  alt={`Gallery image ${index + 1}`}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                  priority={false} // Only load when visible
+                />
+              </motion.div>
             ))}
-        </div>
+        </motion.div>
       )}
 
       {/* Image Modal View */}
       <AnimatePresence>
         {selectedImage && (
-          <motion.div className="fixed inset-0 bg-black/80 flex justify-center items-center z-50" onClick={closeImage}>
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80">
             <motion.div
-              className="relative max-w-5xl w-full p-4"
-              variants={flipVariants}
+              className="relative w-full max-w-6xl rounded-lg bg-white p-4 shadow-lg"
+              variants={fadeScaleVariants}
               initial="initial"
               animate="animate"
               exit="exit"
               custom={direction}
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal content
             >
               <button
                 onClick={closeImage}
-                className="absolute top-4 right-4 text-white text-xl bg-gray-700 p-2 rounded-full"
+                className="absolute right-4 top-4 z-10 rounded-full bg-gray-700 p-2 text-white transition-colors hover:bg-gray-800"
+                aria-label="Close image"
               >
                 ✕
               </button>
-              <img
-                src={selectedImage || "/placeholder.svg"}
-                alt=""
-                className="w-full h-auto max-h-[85vh] rounded-lg shadow-lg object-contain"
-              />
-              <div className="flex justify-between mt-4">
-                <button onClick={handlePrev} className="text-white text-xl">
+              <div className="relative h-[80vh] w-full">
+                <Image
+                  src={selectedImage || "/placeholder.svg?height=800&width=800&query=selected gallery image"}
+                  alt="Selected gallery image"
+                  fill
+                  className="rounded-lg object-contain"
+                  sizes="100vw"
+                  priority
+                />
+              </div>
+              <div className="mt-4 flex justify-between">
+                <button
+                  onClick={handlePrev}
+                  className="rounded-full bg-gray-700 p-2 text-white transition-colors hover:bg-gray-800"
+                  aria-label="Previous image"
+                >
                   ◀
                 </button>
-                <button onClick={handleNext} className="text-white text-xl">
+                <button
+                  onClick={handleNext}
+                  className="rounded-full bg-gray-700 p-2 text-white transition-colors hover:bg-gray-800"
+                  aria-label="Next image"
+                >
                   ▶
                 </button>
               </div>
             </motion.div>
-          </motion.div>
+          </div>
         )}
       </AnimatePresence>
     </div>
