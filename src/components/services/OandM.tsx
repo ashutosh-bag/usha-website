@@ -168,7 +168,7 @@ export default function OandM() {
             </p>
             <p className="text-muted-foreground md:text-lg">
               Reliability-centered design reviews are built into the EPC process to ensure operability, maintainability,
-              and safety during the plant lifecycle [
+              and safety during the plant lifecycle 
             </p>
           </div>
 
@@ -191,7 +191,7 @@ export default function OandM() {
             <ul className="list-disc list-inside space-y-2 text-muted-foreground md:text-lg">
               <li>
                 **NTPC Talcher / Kanhia, Odisha** &ndash; design, fabrication, erection, and commissioning of full coal
-                handling and ash systems including ESPs, slurry pipelines, conveyors [^vercel_knowledge_base].
+                handling and ash systems including ESPs, slurry pipelines, conveyors 
               </li>
               <li>
                 **NALCO Angul** &ndash; 195 km ash slurry pipeline under EPC contract, complete ash handling systems
