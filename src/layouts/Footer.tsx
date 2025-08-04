@@ -87,7 +87,7 @@ export default function Footer() {
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-[url('/placeholder.svg?height=600&width=1200&text=Industrial+Background')] bg-cover bg-center opacity-10"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-blue-900/80 to-gray-900/90"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 via-blue-900 to-gray-900/90"></div>
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-green-500 to-blue-500"></div>
       </div>
 

@@ -1,12 +1,10 @@
-"use client";
+"use client"
+import Image from "next/image"
+import { Swiper, SwiperSlide } from "swiper/react"
+import { Autoplay } from "swiper/modules"
+import "swiper/css"
 
-import React from "react";
-import Image from "next/image";
-
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
-import "swiper/css";
-
+// Static imports for image optimization
 const images = [
   "/assets/aboutusha/pic1.jpg",
  "/assets/aboutusha/pic4.jpg",
@@ -16,43 +14,44 @@ const images = [
 ];
 
 export default function AboutCompany() {
-
   return (
-    <section className="bg-gradient-to-br from-green-500 to to-sky-400 py-10">
+    <section className="bg-white py-16 md:py-24">
       {/* Video Section */}
-      <div className="max-w-48xl mx-auto mb-10" >
-        <iframe
-          width="1140"
-          height="641"
-          src="https://www.youtube.com/embed/Ux5rMoEdGwE"
-          title="Nalco LSD Project"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerPolicy="strict-origin-when-cross-origin"
-          allowFullScreen
-          className="w-full rounded-lg shadow-lg"
-        ></iframe>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+        <div className="relative w-full pt-[56.25%] rounded-xl shadow-2xl overflow-hidden">
+          {/* 16:9 Aspect Ratio */}
+          <iframe
+            src="https://www.youtube.com/embed/Ux5rMoEdGwE"
+            title="Nalco LSD Project"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+            className="absolute top-0 left-0 w-full h-full"
+          ></iframe>
+        </div>
       </div>
 
       {/* About Section */}
-      <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-10 px-5">
+      <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-12 px-4 sm:px-6 lg:px-8">
         {/* Swiper Image Slider */}
-        <div className="w-full lg:w-1/2" >
+        <div className="w-full lg:w-1/2 relative aspect-video lg:aspect-auto lg:h-[450px] rounded-xl shadow-xl overflow-hidden">
           <Swiper
             spaceBetween={20}
             slidesPerView={1}
             autoplay={{ delay: 3000, disableOnInteraction: false }}
             loop
             modules={[Autoplay]}
-            className="w-full h-auto rounded-lg shadow-lg"
+            className="w-full h-full"
           >
-            {images.map((src, index) => (
+            {images.map((image, index) => (
               <SwiperSlide key={index}>
                 <Image
-                  src={src}
+                  src={image || "/placeholder.svg"}
                   alt={`Company Image ${index + 1}`}
-                  width={500}
-                  height={500}
-                  className="rounded-lg w-full h-auto"
+                  fill // Use fill to make image cover the slide
+                  className="object-cover" // Ensure image covers the area
+                  sizes="(max-width: 768px) 100vw, 50vw" // Optimize image loading based on viewport
+                  priority={index === 0} // Prioritize the first image for LCP
                 />
               </SwiperSlide>
             ))}
@@ -95,5 +94,5 @@ export default function AboutCompany() {
         </div>
       </div>
     </section>
-  );
+  )
 }

@@ -252,7 +252,7 @@ export default function MissionVision() {
                 src="/assets/home/indianflag.mp4"
                 width={400}
                 height={300}
-                controls
+                
                 autoPlay
                 loop
                 muted
