@@ -1,34 +1,63 @@
 "use client"
-
-import type React from "react"
-
 import CommonBreadcrumb from "../commonbreadcrumb/CommonBreadcrumb"
 import Image from "next/image"
 import { motion } from "framer-motion"
 
 export default function FieldOfOperation() {
-  // Add client-side detection
-
   return (
-    <section className="bg-gradient-to-b from-green-500 to to-sky-400 font-lora text-gray-900">
-      {/* Breadcrumb at the Top */}
+    <section className="bg-gradient-to-br from-gray-50 to-blue-50 font-lora text-gray-900">
+      {/* Breadcrumb at the Top - Using string path as requested */}
       <CommonBreadcrumb imageUrl="/assets/operation/9.jpg" />
-
-      <div className="max-w-7xl mx-auto px-6 py-16" >
-        <h2 className="text-4xl font-bold text-yellow-600 uppercase text-center mb-8">
-          Field of <span className="text-gray-800">Operation</span>
-        </h2>
+      <div className="max-w-7xl mx-auto px-6 py-16 md:py-24">
+        <motion.h2
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-4xl md:text-5xl font-bold text-center mb-12 leading-tight"
+        >
+          Field of{" "}
+          <span className="bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">Operation</span>
+        </motion.h2>
 
         {/* Main Content Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left Side - Text Content */}
-          <div className="relative flex justify-center">
-            {/* Static Background Image */}
-            <Image src="/assets/operation/s-1.png" alt="Field of Operation" width={500} height={500} className="" />
-          </div>
+          {/* Left Side - Image Content */}
           <motion.div
-            className="space-y-6 text-gray-700"
+            className="relative flex justify-center lg:justify-end p-4"
             initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            {/* Using string path for Image src as requested */}
+            <Image
+              src="/assets/operation/s-1.png"
+              alt="Field of Operation Illustration"
+              width={600}
+              height={600}
+              className="w-full max-w-md lg:max-w-full h-auto rounded-xl shadow-xl"
+              // Note: `sizes` and `priority` are still beneficial for performance even with string src
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              priority // Consider if this image is above the fold
+            />
+            {/* Floating Crane Hook */}
+            <motion.div
+              initial={{ opacity: 0, y: 50, x: -20 }}
+              whileInView={{ opacity: 1, y: 0, x: 0 }}
+              transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+              viewport={{ once: true }}
+              className="absolute -bottom-10 -right-10 hidden md:block w-48 h-48 lg:w-64 lg:h-64"
+            >
+              {/* Using string path for Image src as requested */}
+              
+            </motion.div>
+          </motion.div>
+
+          {/* Right Side - Text Content */}
+          <motion.div
+            className="space-y-6 text-gray-700 text-lg leading-relaxed"
+            initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
@@ -70,36 +99,18 @@ export default function FieldOfOperation() {
               critical services where creep / corrosion resistance and controlled ferrite content is required, aluminum
               piping for cryogenic services etc.
             </p>
-
-            <ul className="list-disc list-inside text-gray-800 space-y-2">
-              <li>Iron ore slurry pipeline Erections & Commissioning.</li>
-              <li>Planning & feasibility report, Engineering Procurement & Commissioning.</li>
-              <li>Fabrication and erection of structures.</li>
-              <li>Construction of Cryogenic Plants & Package Units.</li>
-              <li>Piping & EPC Projects.</li>
-              <li>Heavy Static and Rotary Equipment erection.</li>
-              <li>Survey Work, HDD, and Augur Boring.</li>
+            <ul className="list-disc list-inside text-gray-800 space-y-2 mt-6">
+              <li className="text-base">Iron ore slurry pipeline Erections & Commissioning.</li>
+              <li className="text-base">Planning & feasibility report, Engineering Procurement & Commissioning.</li>
+              <li className="text-base">Fabrication and erection of structures.</li>
+              <li className="text-base">Construction of Cryogenic Plants & Package Units.</li>
+              <li className="text-base">Piping & EPC Projects.</li>
+              <li className="text-base">Heavy Static and Rotary Equipment erection.</li>
+              <li className="text-base">Survey Work, HDD, and Augur Boring.</li>
             </ul>
           </motion.div>
-
-          {/* Right Side - Image with Mouse Sensitivity */}
-          
-            <motion.div
-              className="absolute sm:block hidden -left-10 bottom-0"
-             
-            >
-              <Image
-                src="/assets/operation/cranehook.png"
-                alt="Floating Valve"
-                width={500}
-                height={500}
-                className="transition-transform duration-300 ease-out"
-              />
-            </motion.div>
-       
         </div>
       </div>
     </section>
   )
 }
-

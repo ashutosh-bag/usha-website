@@ -3,7 +3,7 @@ import { useRef, useState } from "react"
 import Image from "next/image"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Navigation, Pagination, Autoplay } from "swiper/modules"
-import { motion, useInView, AnimatePresence } from "framer-motion"
+import { motion, useInView } from "framer-motion" // AnimatePresence is not needed for this specific logic
 import { Quote, Star, ChevronLeft, ChevronRight, Play, Pause, ChevronDown, ChevronUp } from "lucide-react"
 import "swiper/css"
 import "swiper/css/navigation"
@@ -84,6 +84,14 @@ const testimonials = [
   },
 ]
 
+// Helper function to get preview text
+const getPreviewText = (text: string, maxLength = 250) => {
+  if (text.length <= maxLength) {
+    return text
+  }
+  return text.substring(0, maxLength) + "..."
+}
+
 export default function Testimonials() {
   const swiperRef = useRef<SwiperType | null>(null)
   const [isPlaying, setIsPlaying] = useState(true)
@@ -110,8 +118,6 @@ export default function Testimonials() {
     }))
   }
 
-  
-
   return (
     <div
       ref={containerRef}
@@ -122,7 +128,6 @@ export default function Testimonials() {
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"></div>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-green-400/20 to-blue-400/20 rounded-full blur-3xl"></div>
       </div>
-
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         {/* Header Section */}
         <motion.div
@@ -134,22 +139,18 @@ export default function Testimonials() {
           <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-600 to-green-600 rounded-full mb-6 shadow-lg">
             <Quote className="w-8 h-8 text-white" />
           </div>
-
           <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
             Client{" "}
             <span className="bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
               Testimonials
             </span>
           </h2>
-
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8">
             Discover what industry leaders say about our commitment to excellence, innovation, and delivering results
             that exceed expectations.
           </p>
-
           <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-green-600 mx-auto rounded-full"></div>
         </motion.div>
-
         {/* Main Testimonials Slider */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -196,7 +197,6 @@ export default function Testimonials() {
                     <div className="absolute top-6 right-6 w-12 h-12 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center opacity-20 group-hover:opacity-100 transition-opacity duration-300">
                       <Quote className="w-6 h-6 text-white" />
                     </div>
-
                     {/* Client Profile */}
                     <div className="flex items-center space-x-4 mb-6">
                       <div className="relative">
@@ -205,11 +205,12 @@ export default function Testimonials() {
                             <Image
                               src={
                                 testimonial.image ||
-                                "/placeholder.svg?height=64&width=64&text=" +
+                                `/placeholder.svg?height=64&width=64&text=${
                                   testimonial.name
                                     .split(" ")
                                     .map((n) => n[0])
-                                    .join("")
+                                    .join("") || "/placeholder.svg"
+                                }`
                               }
                               alt={testimonial.name}
                               width={64}
@@ -229,7 +230,6 @@ export default function Testimonials() {
                           <div className="w-2 h-2 bg-white rounded-full"></div>
                         </div>
                       </div>
-
                       <div className="flex-1">
                         <h3 className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
                           {testimonial.name}
@@ -240,7 +240,6 @@ export default function Testimonials() {
                         )}
                       </div>
                     </div>
-
                     {/* Rating */}
                     <div className="flex items-center space-x-1 mb-6">
                       {Array.from({ length: 5 }, (_, i) => (
@@ -253,13 +252,11 @@ export default function Testimonials() {
                       ))}
                       <span className="text-sm text-gray-600 ml-2">({testimonial.rating}.0)</span>
                     </div>
-
                     {/* Testimonial Content */}
                     <div className="relative">
                       <blockquote className="text-gray-700 leading-relaxed text-base mb-4">
-                        {`"{expandedCards[testimonial.id] ? testimonial.feedback : getPreviewText(testimonial.feedback)}"`}
+                        {expandedCards[testimonial.id] ? testimonial.feedback : getPreviewText(testimonial.feedback)}
                       </blockquote>
-
                       {/* Expand/Collapse Button */}
                       {testimonial.feedback.length > 200 && (
                         <motion.button
@@ -276,54 +273,30 @@ export default function Testimonials() {
                           )}
                         </motion.button>
                       )}
-
-                      {/* Expanded Content Animation */}
-                      <AnimatePresence>
-                        {expandedCards[testimonial.id] && testimonial.feedback.length > 200 && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="overflow-hidden"
-                          >
-                            <div className="pt-4 border-t border-gray-100 mt-4">
-                              <div className="bg-gradient-to-r from-blue-50 to-green-50 rounded-lg p-4">
-                                <p className="text-sm text-gray-600 italic">Complete testimonial displayed above</p>
-                              </div>
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
                     </div>
                   </div>
-
                   {/* Hover Effect Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                 </motion.div>
               </SwiperSlide>
             ))}
           </Swiper>
-
           {/* Custom Navigation */}
           <div className="flex items-center justify-center space-x-4 mt-8">
             <button className="testimonial-button-prev w-12 h-12 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-600 hover:text-blue-600 hover:bg-white transition-all duration-300 shadow-lg hover:shadow-xl">
               <ChevronLeft className="w-6 h-6" />
             </button>
-
             <button
               onClick={toggleAutoplay}
               className="w-12 h-12 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center text-white hover:shadow-lg transition-all duration-300"
             >
               {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-0.5" />}
             </button>
-
             <button className="testimonial-button-next w-12 h-12 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-600 hover:text-blue-600 hover:bg-white transition-all duration-300 shadow-lg hover:shadow-xl">
               <ChevronRight className="w-6 h-6" />
             </button>
           </div>
         </motion.div>
-
         {/* Trust Indicators */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -354,7 +327,6 @@ export default function Testimonials() {
           </div>
         </motion.div>
       </div>
-
       {/* Custom Styles */}
       <style jsx global>{`
         .testimonials-swiper .swiper-pagination-bullet {
