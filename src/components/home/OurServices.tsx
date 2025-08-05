@@ -234,12 +234,12 @@ export default function OurServices() {
                       {service.title}
                     </h3>
 
-                    <p className="text-gray-300 text-sm leading-relaxed">{service.description}</p>
+                    <p className="text-white text-sm leading-relaxed">{service.description}</p>
 
                     {/* Features List */}
                     <div className="space-y-2">
                       {service.features.map((feature, idx) => (
-                        <div key={idx} className="flex items-center text-sm text-gray-400">
+                        <div key={idx} className="flex items-center text-sm text-white">
                           <div className="w-2 h-2 bg-gradient-to-r from-green-400 to-blue-400 rounded-full mr-3"></div>
                           {feature}
                         </div>
