@@ -48,7 +48,7 @@ const services = [
   {
     id: 6,
     title: "CHP & AHP SERVICES",
-    img: "/assets/ahpchs/img19.jpeg",
+    img: "/assets/ahpchs/img14.jpeg",
     description: "Combined Heat and Power & Air Handling solutions",
     features: ["Energy Efficiency", "System Design", "Maintenance"],
   },
