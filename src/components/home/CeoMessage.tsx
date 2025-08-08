@@ -168,8 +168,8 @@ export default function CeoMessage() {
                     <p className="text-lg">
                       Our sustained track record of profitable growth reflects our deep understanding of client needs
                       and our ability to anticipate future market demands. We remain committed to delivering innovative
-                      solutions that not only meet {`today's`} requirements but also prepare our clients for {`tomorrow's`}
-                      challenges.
+                      solutions that not only meet {`today's`} requirements but also prepare our clients for {`tomorrow's`} 
+                       challenges.
                     </p>
 
                     <p className="text-lg">

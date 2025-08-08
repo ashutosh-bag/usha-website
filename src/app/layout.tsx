@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from 'next/font/google';
 import "./globals.css";
 import Header from "@/layouts/Header";
 import Footer from "@/layouts/Footer";
 import NavBar from "@/layouts/NavBar";
 import ResponsiveNavbar from "@/layouts/ResponsiveNavBar";
-
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,13 +40,12 @@ export default function RootLayout({
       >
         {/* Header Section */}
         <Header />
-<NavBar/>
-<ResponsiveNavbar/>
+        <NavBar />
+        <ResponsiveNavbar />
         {/* Main Content */}
         <main>{children}</main>
-
         {/* Footer Section */}
-        <Footer/>
+        <Footer />
       </body>
     </html>
   );
