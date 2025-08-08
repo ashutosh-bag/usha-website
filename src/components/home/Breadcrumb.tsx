@@ -1,8 +1,9 @@
-"use client"
+'use client'
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
+import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react' // Import Lucide icons
 
 const slides = [
   {
@@ -80,16 +81,13 @@ export function HeroSlider() {
 
   useEffect(() => {
     if (!isPlaying) return
-
     const interval = setInterval(() => {
       setIndex((prevIndex) => (prevIndex + 1) % slides.length)
       setProgress(0)
     }, 5000)
-
     const progressInterval = setInterval(() => {
       setProgress((prev) => (prev >= 100 ? 0 : prev + 2))
     }, 100)
-
     return () => {
       clearInterval(interval)
       clearInterval(progressInterval)
@@ -111,6 +109,7 @@ export function HeroSlider() {
       {/* Background Overlay with Gradient */}
       <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent z-20"></div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20 z-20"></div>
+
       {/* Animated Particles Background */}
       <div className="absolute inset-0 z-10">
         {particlePositions.map((pos, i) => (
@@ -130,6 +129,7 @@ export function HeroSlider() {
           />
         ))}
       </div>
+
       {/* Main Content Container */}
       <div className="relative z-30 h-full flex items-center">
         {/* Animated Quote (Positioned Left Center) */}
@@ -157,24 +157,30 @@ export function HeroSlider() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                {slides[index].quote.split("").map((char, i) => (
-                  <motion.span
-                    key={i}
-                    initial={{ opacity: 0, y: -30, scale: 0.8, rotateX: -90 }}
-                    animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
-                    transition={{
-                      delay: i * 0.03,
-                      type: "spring",
-                      stiffness: 100,
-                      damping: 12,
-                    }}
-                    className="inline-block"
-                    style={{
-                      textShadow: "0 0 20px rgba(45, 212, 191, 0.5)",
-                    }}
-                  >
-                    {char === " " ? "\u00A0" : char}
-                  </motion.span>
+                {slides[index].quote.split(" ").map((word, wordIndex) => (
+                  <span key={wordIndex} className="inline-block whitespace-nowrap">
+                    {word.split("").map((char, charIndex) => (
+                      <motion.span
+                        key={`${wordIndex}-${charIndex}`}
+                        initial={{ opacity: 0, y: -30, scale: 0.8, rotateX: -90 }}
+                        animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
+                        transition={{
+                          delay: (wordIndex * 0.08) + (charIndex * 0.03), // Adjusted delay
+                          type: "spring",
+                          stiffness: 100,
+                          damping: 12,
+                        }}
+                        className="inline-block"
+                        style={{
+                          textShadow: "0 0 20px rgba(45, 212, 191, 0.5)",
+                        }}
+                      >
+                        {char}
+                      </motion.span>
+                    ))}
+                    {/* Add a non-breaking space after each word, unless it's the last word */}
+                    {wordIndex < slides[index].quote.split(" ").length - 1 && "\u00A0"}
+                  </span>
                 ))}
               </motion.h2>
             </AnimatePresence>
@@ -190,6 +196,7 @@ export function HeroSlider() {
           </motion.div>
         </div>
       </div>
+
       {/* Image Slider with Enhanced Animations */}
       <AnimatePresence mode="wait">
         <motion.div
@@ -222,6 +229,7 @@ export function HeroSlider() {
           <div className="absolute inset-0 bg-gradient-to-br from-teal-900/20 via-transparent to-yellow-900/20 mix-blend-overlay"></div>
         </motion.div>
       </AnimatePresence>
+
       {/* Navigation Controls */}
       <div className="absolute top-1/2 right-4 sm:right-8 transform -translate-y-1/2 z-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <div className="flex flex-col gap-4">
@@ -231,9 +239,7 @@ export function HeroSlider() {
             onClick={prevSlide}
             className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:text-teal-400 transition-colors duration-300 border border-white/30"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
+            <ChevronLeft className="w-6 h-6" /> {/* Lucide Icon */}
           </motion.button>
           <motion.button
             whileHover={{ scale: 1.1, backgroundColor: "rgba(45, 212, 191, 0.8)" }}
@@ -242,18 +248,9 @@ export function HeroSlider() {
             className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:text-teal-400 transition-colors duration-300 border border-white/30"
           >
             {isPlaying ? (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6" />
-              </svg>
+              <Pause className="w-6 h-6" /> // Lucide Icon
             ) : (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293H15"
-                />
-              </svg>
+              <Play className="w-6 h-6" /> // Lucide Icon
             )}
           </motion.button>
           <motion.button
@@ -262,12 +259,11 @@ export function HeroSlider() {
             onClick={nextSlide}
             className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:text-teal-400 transition-colors duration-300 border border-white/30"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
+            <ChevronRight className="w-6 h-6" /> {/* Lucide Icon */}
           </motion.button>
         </div>
       </div>
+
       {/* Enhanced Navigation Dots with Progress */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-40">
         <div className="flex items-center gap-3 bg-black/30 backdrop-blur-sm px-6 py-3 rounded-full border border-white/20">
@@ -309,6 +305,7 @@ export function HeroSlider() {
           </div>
         </div>
       </div>
+
       {/* Slide Counter */}
       <div className="absolute top-8 right-8 z-40 bg-black/30 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20">
         <span className="text-white font-mono text-sm">
